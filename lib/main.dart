@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_c214/widgets/movie_card.dart';
 import 'package:projeto_c214/widgets/search_field.dart';
 
 void main() {
@@ -111,6 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            MovieCard(),
             SearchField(
               labelText: 'Pesquisar',
               hintText: 'Digite o que quer pesquisar',
