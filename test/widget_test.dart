@@ -27,4 +27,12 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
+
+  void main() {
+    testWidgets('Verificação do AppBar', (WidgetTester tester) async {
+      await tester.pumpWidget(const MyApp());
+
+      expect(find.text('Flutter Demo Home Page'), findsOneWidget);
+    });
+  }
 }
