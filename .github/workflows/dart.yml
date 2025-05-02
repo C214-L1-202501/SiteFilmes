@@ -48,7 +48,7 @@ jobs:
       - name: Build web
         run: flutter build web
 
-coverage:
+  coverage:
     name: Generate Test Coverage
     runs-on: ubuntu-latest
     needs: test  # roda depois dos testes
