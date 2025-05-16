@@ -15,15 +15,15 @@ class Movie {
 List<Movie> movies = [
   Movie(
     duration: 120,
-    name: "Movie 1",
-    director: "Director 1",
-    cast: ["Actor A", "Actor B", "Actor C"],
+    name: "Matrix",
+    director: "Lilly Wachowski e Lana Wachowski",
+    cast: ["Keanu Reeves", "Laurence Fishburne","Carrie-Anne Moss"],
   ),
   Movie(
     duration: 95,
     name: "Movie 2",
-    director: "Director 2",
-    cast: ["Actor D", "Actor E"],
+    director: "Christopher Nolan",
+    cast: ["Matthew McConaughey","Anne Hathaway","Jessica Chastain"],
   ),
   Movie(
     duration: 105,
