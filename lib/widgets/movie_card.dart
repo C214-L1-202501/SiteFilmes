@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_c214/models/movie_model.dart';
 import 'package:projeto_c214/services/movie_service.dart';
+import 'package:projeto_c214/pages/movie_detail_page.dart';
+
 
 class MovieCard extends StatefulWidget {
   final MovieService? movieService;
@@ -40,35 +42,45 @@ class MovieCardState extends State<MovieCard> {
             margin: const EdgeInsets.all(16.0),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text("Error: ${snapshot.error}"),
+              child: Text("Erro: ${snapshot.error}"),
             ),
           );
         } else if (snapshot.hasData) {
           final movie = snapshot.data!;
-          return Card(
-            margin: const EdgeInsets.all(16.0),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    movie.name,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text("Director: ${movie.director}"),
-                  SizedBox(height: 8),
-                  Text("Duration: ${movie.duration} mins"),
-                  SizedBox(height: 8),
-                  Text("Cast: ${movie.cast.join(', ')}"),
-                ],
+          return InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MovieDetailPage(movie: movie),
+                ),
+              );
+            },
+            child: Card(
+              margin: const EdgeInsets.all(16.0),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      movie.name,
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Text("Diretor: ${movie.director}"),
+                    const SizedBox(height: 8),
+                    Text("Duração: ${movie.duration} min"),
+                    const SizedBox(height: 8),
+                    Text("Elenco: ${movie.cast.join(', ')}"),
+                  ],
+                ),
               ),
             ),
           );
         } else {
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         }
       },
     );
