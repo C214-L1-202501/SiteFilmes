@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_c214/widgets/movie_card.dart';
 import 'package:projeto_c214/widgets/search_field.dart';
+import 'package:projeto_c214/pages/cadastro_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,27 +10,11 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Análise de Filmes',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const MyHomePage(title: 'Análise de Filmes'),
@@ -40,15 +25,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -56,80 +32,101 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Widget> movies = [
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-    MovieCard(),
-  ];
+  List<Widget> movies = List.generate(16, (_) => MovieCard());
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        // Cor roxa escura no topo
+        backgroundColor: const Color(0xFF4A148C),
+        title: Text(
+          widget.title,
+          style: const TextStyle(
+            color: Colors.white, // Texto branco
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white), // Ícones brancos
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
+
+      // MENU LATERAL (DRAWER)
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SearchField(
-                labelText: 'Pesquisar',
-                hintText: 'Digite o que quer pesquisar',
-                helperText: 'O resultado aparecerá na Snackbar',
-                onSearch:
-                    (input) => {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Foi digitado $input na barra de pesquisa',
-                          ),
-                        ),
-                      ),
-                    },
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Color(0xFF4A148C),
+              ),
+              child: const Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
               ),
             ),
-            SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              height: MediaQuery.sizeOf(context).height - 150,
-              child: GridView.count(
-                crossAxisCount: 4,
-                crossAxisSpacing: 10,
-                children: movies,
-              ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Início'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.movie),
+              title: const Text('Filmes'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Configurações'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.person_add),
+              title: const Text('Cadastro'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CadastroPage()),
+                );
+              },
             ),
           ],
         ),
+      ),
+
+      // COR DE FUNDO DO BODY
+      backgroundColor: const Color(0xFFF3E5F5), // Roxo bem clarinho
+
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SearchField(
+              labelText: 'Pesquisar',
+              hintText: 'Digite o que quer pesquisar',
+              helperText: 'O resultado aparecerá na Snackbar',
+              onSearch: (input) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Foi digitado $input na barra de pesquisa'),
+                  ),
+                );
+              },
+            ),
+          ),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 4,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              padding: const EdgeInsets.all(10),
+              children: movies,
+            ),
+          ),
+        ],
       ),
     );
   }
