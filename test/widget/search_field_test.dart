@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:projeto_c214/widgets/search_field.dart';
 
-void main() async {
+void main() {
   testWidgets('should set labelText correctly', (WidgetTester tester) async {
     const testLabelText = 'Test Label';
     await tester.pumpWidget(
@@ -13,12 +13,9 @@ void main() async {
       ),
     );
 
-    final inputDecoratorFinder = find.byType(InputDecorator);
-    expect(inputDecoratorFinder, findsOneWidget);
-
-    final inputDecorator = tester.widget<InputDecorator>(inputDecoratorFinder);
-    final decoration = inputDecorator.decoration;
-    expect(decoration.labelText, testLabelText);
+    final textField = find.byType(TextField);
+    final widget = tester.widget<TextField>(textField);
+    expect(widget.decoration?.labelText, testLabelText);
   });
 
   testWidgets('should set hintText correctly', (WidgetTester tester) async {
@@ -31,12 +28,9 @@ void main() async {
       ),
     );
 
-    final inputDecoratorFinder = find.byType(InputDecorator);
-    expect(inputDecoratorFinder, findsOneWidget);
-
-    final inputDecorator = tester.widget<InputDecorator>(inputDecoratorFinder);
-    final decoration = inputDecorator.decoration;
-    expect(decoration.hintText, testHintText);
+    final textField = find.byType(TextField);
+    final widget = tester.widget<TextField>(textField);
+    expect(widget.decoration?.hintText, testHintText);
   });
 
   testWidgets('should set helperText correctly', (WidgetTester tester) async {
@@ -49,17 +43,12 @@ void main() async {
       ),
     );
 
-    final inputDecoratorFinder = find.byType(InputDecorator);
-    expect(inputDecoratorFinder, findsOneWidget);
-
-    final inputDecorator = tester.widget<InputDecorator>(inputDecoratorFinder);
-    final decoration = inputDecorator.decoration;
-    expect(decoration.helperText, testHelperText);
+    final textField = find.byType(TextField);
+    final widget = tester.widget<TextField>(textField);
+    expect(widget.decoration?.helperText, testHelperText);
   });
 
-    testWidgets('should call onSearch when search button is pressed', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('should call onSearch when search button is pressed', (WidgetTester tester) async {
     String? capturedInput;
     await tester.pumpWidget(
       MaterialApp(
@@ -75,7 +64,7 @@ void main() async {
 
     await tester.enterText(find.byType(TextField), 'Flutter Test');
     await tester.tap(find.byIcon(Icons.search));
-    await tester.pump();
+    await tester.pump(); // permite atualização do estado após a ação
 
     expect(capturedInput, 'Flutter Test');
   });
