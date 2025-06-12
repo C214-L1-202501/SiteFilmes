@@ -30,4 +30,4 @@ jobs:
         run: flutter pub get
 
       - name: Run Tests (no null safety)
-        run: flutter test --no-sound-null-safety
+        run: flutter test
