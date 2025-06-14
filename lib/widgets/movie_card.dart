@@ -3,6 +3,7 @@ import 'package:projeto_c214/models/movie_model.dart';
 import 'package:projeto_c214/services/movie_service.dart';
 import 'package:projeto_c214/pages/movie_detail_page.dart';
 
+
 class MovieCard extends StatefulWidget {
   final MovieService? movieService;
   final int? index;
@@ -31,8 +32,8 @@ class MovieCardState extends State<MovieCard> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Card(
             margin: const EdgeInsets.all(16.0),
-            child: const Padding(
-              padding: EdgeInsets.all(16.0),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Center(child: CircularProgressIndicator()),
             ),
           );
@@ -65,8 +66,7 @@ class MovieCardState extends State<MovieCard> {
                   children: [
                     Text(
                       movie.name,
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     Text("Diretor: ${movie.director}"),
